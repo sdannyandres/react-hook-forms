@@ -4,7 +4,7 @@ import './App.css'
 import {useForm} from 'react-hook-form'
 
 function App() {
- const {register, handleSubmit, watch, getValues, formState: {errors}} = useForm();
+ const {register, handleSubmit, watch, getValues,setValue, formState: {errors}} = useForm();
   
   function onSubmit(data) {
     //acceder al servidor--//
@@ -15,12 +15,15 @@ function App() {
   }, 
   [watch(getValues())]
   )
- 
+  const onBlur = (e) =>{
+    setValue("campo3",e.target.value)
+  }
   return (
     <div className="App">
           <form onSubmit={handleSubmit(onSubmit)}>
-          <input {...register("campo1")} /><br></br>
+          <input {...register("campo1", {onBlur:(e)=>onBlur(e)})} /><br></br>
           <input {...register("campo2")} /><br></br>
+          <input {...register("campo3")} /><br></br>
           {errors.campo2 && <span>el campo es requerido</span>}
           <input type="submit" />
           </form>   
